@@ -3,6 +3,7 @@ module.exports = function check(str, bracketsConfig) {
   let newArr = Array.from(str)
   let leftBArr = bracketsConfig.map(x => x[0])
   let rightBArr = bracketsConfig.map(x => x[1])
+  let rbClosedArr = []
   console.log(str)
   if ((rightBArr.includes(newArr[0]) && newArr[0] !== '|') || (leftBArr.includes(newArr[newArr.length - 1]) && newArr[newArr.length - 1] !== '|')) return false
   newArr.forEach((x, i) => {
@@ -17,6 +18,7 @@ module.exports = function check(str, bracketsConfig) {
         if (testInd === rightBArr.indexOf(newArr[c])) {
           if (sameC === 0) {
             (c - i) % 2 !== 0 ? res *= 1 : res *= 0
+            rbClosedArr.push(c)
             break
           }
           else --sameC
@@ -25,6 +27,8 @@ module.exports = function check(str, bracketsConfig) {
         ++c
       }
     }
+    else rbClosedArr.includes(i) ? res *= 1 : res *= 0
+
   })
   return !!res
 }
